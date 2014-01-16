@@ -208,8 +208,8 @@ class SpatialDataGenerator:
         
     def plot_map(self):
         image_file = "%s.png"%self.out_file.rsplit('.')[0]
-        plot_map = robjects.globalenv["plot.map"]
-        plot_map(self.out_file, image_file)
+        r_plot_map = robjects.globalenv["plot.map"]
+        r_plot_map(self.out_file, image_file)
         
             
 def run():
