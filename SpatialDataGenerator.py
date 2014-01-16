@@ -8,6 +8,8 @@ import pyproj
 import math
 import rpy2.robjects as ro
 import rpy2.robjects as robjects
+from optparse import OptionParser
+
 
 robjects.r('''source('spatial_plotter.R')''')
 
@@ -210,10 +212,19 @@ class SpatialDataGenerator:
         image_file = "%s.png"%self.out_file.rsplit('.')[0]
         r_plot_map = robjects.globalenv["plot.map"]
         r_plot_map(self.out_file, image_file)
-        
-            
-def run():
-    SDG = SpatialDataGenerator("data/delhi.cfg")
+ 
+def main(options, args):
+    if not options.config_file:
+        print "Error: Please specify config file"
+        sys.exit(0)
+    SDG = SpatialDataGenerator(options.config_file)
     SDG.generate_spatial_data()
     SDG.plot_map()
-    
+     
+if __name__ == '__main__':
+    parser = OptionParser()
+    parser.add_option("-c", "--config-file", help="config file, example specified in data/delhi.cfg")
+    (options, args) = parser.parse_args()
+    main(options,args)     
+            
+
