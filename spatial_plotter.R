@@ -9,9 +9,7 @@ library(reshape2)
 library(scales)
 
 
-
-
-plot.map <- function(spatial_file, image_file){
+plot.map <- function(spatial_file, image_file, xlab, ylab, title){
     d = read.csv(spatial_file, header=F)
     colnames(d) = c("long","lat","order","hole","piece","group","id","name")
     d$pc = d$id
@@ -21,7 +19,7 @@ plot.map <- function(spatial_file, image_file){
     
     p1 = ggplot(data)
     p1 = p1 + geom_map(aes(fill = random, map_id = id), map = d) + scale_fill_gradient(low = "darkred", high ="red")
-    p1 <- p1 + expand_limits(x = d$long, y = d$lat) + labs(x="longitude", y="lattitude", title="India General Election, 2009: Swing Constituencies")
+    p1 <- p1 + expand_limits(x = d$long, y = d$lat) + labs(x=xlab, y=ylab, title=title)
     p1 <- p1 + coord_equal()
     ggsave(p1,file=image_file)
 }

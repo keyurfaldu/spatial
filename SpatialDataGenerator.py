@@ -169,7 +169,11 @@ class SpatialDataGenerator:
         self.num_regions = eval(self.config.get("MAIN","Regions"))
         self.out_file = eval(self.config.get("MAIN","Output_spatial_file"))
         self.num_superimposed_points = eval(self.config.get("MAIN","Num_superimposed_points"))
-        
+      
+        self.xlab = "Longitude"
+        self.ylab = "Lattitude"
+        self.title = eval(self.config.get("MAIN","Title"))
+
         #Load Image
         self.img = load_image(self.image_file)
         
@@ -211,7 +215,7 @@ class SpatialDataGenerator:
     def plot_map(self):
         image_file = "%s.png"%self.out_file.rsplit('.')[0]
         r_plot_map = robjects.globalenv["plot.map"]
-        r_plot_map(self.out_file, image_file)
+        r_plot_map(self.out_file, image_file, self.xlab, self.ylab, self.title)
  
 def main(options, args):
     if not options.config_file:
